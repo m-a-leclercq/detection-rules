@@ -1,1 +1,8 @@
-{}
+{
+  "447581ae-9eeb-4752-9a07-683e07ad4ea4": {
+    "rule_name": "Test 1",
+    "sha256": "f70a9c125661637cd222b677268fd229754e11e51099fce72ea9d0c2ddc20c63",
+    "type": "eql",
+    "version": 1
+  }
+}
