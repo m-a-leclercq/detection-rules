@@ -30,7 +30,7 @@ jobs:
     sync-to-production:
         runs-on: ubuntu-latest
         env:
-          CUSTOM_RULES_DIR: ${{ env.CUSTOM_RULES_DIR }}
+          CUSTOM_RULES_DIR: ${{ vars.CUSTOM_RULES_DIR }}
 
         steps:
         - name: Checkout Repository
@@ -49,8 +49,8 @@ jobs:
 
         - name: Import Rules to Kibana
           run: |
-            FLAGS="-d ${{ env.CUSTOM_RULES_DIR }}/rules/ --overwrite -e -ac"
+            FLAGS="-d ${{ vars.CUSTOM_RULES_DIR }}/rules/ --overwrite -e -ac"
             python -m detection_rules kibana --space dac_production import-rules $FLAGS
           env:
-            DR_CLOUD_ID: ${{ env.ELASTIC_CLOUD_ID }}
-            DR_API_KEY: ${{ env.ELASTIC_APIKEY }}
+            DR_CLOUD_ID: ${{ vars.ELASTIC_CLOUD_ID }}
+            DR_API_KEY: ${{ vars.ELASTIC_APIKEY }}
