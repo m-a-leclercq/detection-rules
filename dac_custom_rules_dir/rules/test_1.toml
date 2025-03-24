@@ -1,0 +1,56 @@
+
+[metadata]
+creation_date = "2025/01/28"
+integration = []
+maturity = "production"
+updated_date = "2025/01/28"
+
+[rule]
+actions = []
+author = ["3727848238"]
+description = "Test 1"
+enabled = false
+exceptions_list = []
+false_positives = []
+filters = []
+from = "now-360s"
+index = [
+    "apm-*-transaction*",
+    "auditbeat-*",
+    "endgame-*",
+    "filebeat-*",
+    "logs-*",
+    "packetbeat-*",
+    "traces-apm*",
+    "winlogbeat-*",
+    "-*elastic-cloud-logs-*",
+]
+interval = "5m"
+language = "eql"
+license = ""
+max_signals = 100
+name = "Test 1"
+references = []
+related_integrations = []
+required_fields = []
+risk_score = 21
+risk_score_mapping = []
+rule_id = "447581ae-9eeb-4752-9a07-683e07ad4ea4"
+setup = ""
+severity = "low"
+severity_mapping = []
+tags = []
+threat = []
+to = "now"
+type = "eql"
+
+query = '''
+sequence by user.name
+      [ authentication where event.outcome == "failure" ]
+      [ authentication where event.outcome == "success" ]
+'''
+
+
+
+[rule.meta]
+from = "1m"
