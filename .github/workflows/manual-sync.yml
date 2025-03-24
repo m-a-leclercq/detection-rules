@@ -1,4 +1,4 @@
-name: Manually Sync Rules from Elastic Security to GitHub
+name: "[CUSTOM]Manually Sync Rules from Elastic Security to GitHub"
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
   manual-dispatch-sync:
     runs-on: ubuntu-latest
     env:
-      CUSTOM_RULES_DIR: ${{ env.CUSTOM_RULES_DIR }}
+      CUSTOM_RULES_DIR: ${{ vars.CUSTOM_RULES_DIR }}
 
     steps:
     - name: Checkout Repository
@@ -35,10 +35,10 @@ jobs:
 
     - name: Export Rules from Elastic Security and Import Rules to TOML
       run: |
-        python -m detection_rules kibana --space "${{ github.event.inputs.space }}" export-rules --directory ${{ env.CUSTOM_RULES_DIR }}/rules/ -s -sv -e -ac
+        python -m detection_rules kibana --space "${{ github.event.inputs.space }}" export-rules --directory ${{ vars.CUSTOM_RULES_DIR }}/rules/ -s -sv -e -ac
       env:
-        DR_CLOUD_ID: ${{ env.ELASTIC_CLOUD_ID }}
-        DR_API_KEY: ${{ env.ELASTIC_APIKEY }}
+        DR_CLOUD_ID: ${{ vars.ELASTIC_CLOUD_ID }}
+        DR_API_KEY: ${{ vars.ELASTIC_APIKEY }}
 
     - name: Update Version Lock
       run: |
@@ -48,7 +48,7 @@ jobs:
       if: ${{ github.event.inputs.pr_sync_rules_from_elastic == 'true' }}
       uses: peter-evans/create-pull-request@v6
       with:
-        token: ${{ env.GITHUB_TOKEN }}
+        token: ${{ vars.GITHUB_TOKEN }}
         commit-message: "Sync rules from Elastic Security"
         title: "Sync rules from Elastic Security"
         body: "This PR syncs rules from Elastic Security to the repository for review."
@@ -66,4 +66,4 @@ jobs:
         commit_user_name: "GitHub Action"
         commit_user_email: "action@github.com"
       env:
-        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ vars.GITHUB_TOKEN }}
